@@ -99,22 +99,22 @@ class ViewController: UIViewController {
     }
     
     func fullBoard(board: [Int], Win: Bool) {
-        func blankspace(board: [Int]) -> Bool{
+        func blankspace(board: [Int]) -> Bool{//checks to see if board is full
             for i in 0...8{
                 if board[i]==2{
+                    //if any element in the array = 2 there is still an empty spot
                     return true
                 }
             }
+            // if function returns false all spots are taken
             return false
         }
         
-        if Win == false && blankspace(board: board) == false{
+        if Win == false && blankspace(board: board) == false{//concludes draw if board is full and no win detected
             print("It's a draw")
             lblText.text = "It's a draw!"
             gameBoard = [0,0,0,0,0,0,0,0,0]
-            
         }
-        
         
     }
     @IBAction func btnTap(_ sender: AnyObject) {
@@ -126,10 +126,9 @@ class ViewController: UIViewController {
                 gameBoard[sender.tag-1] = 0
                 print(gameBoard)
                 //checks if move caused player 1 to win
-                if checkWin(board: gameBoard, activePlayer: activePlayer) == false{
-                    //run full board
-                }
+                fullBoard(board: gameBoard, Win: checkWin(board: gameBoard, activePlayer: activePlayer))
             }
+                
             else{
                 sender.setImage(UIImage(named: "Nought.png"), for:
                     .normal)
@@ -137,13 +136,8 @@ class ViewController: UIViewController {
                 gameBoard[sender.tag-1] = 1
                 print(gameBoard)
                 //checks if move caused cpu to win
-                if checkWin(board: gameBoard, activePlayer: activePlayer) == false{
-                    //run full board
-                }
+                fullBoard(board: gameBoard, Win: checkWin(board: gameBoard, activePlayer: activePlayer))
             }
-        }
-        else{
-             lblText.text = "pick a space that has not been taken"
         }
     }
 
@@ -153,8 +147,8 @@ class ViewController: UIViewController {
             let button = view.viewWithTag(i) as! UIButton
             button.setImage(nil, for: .normal)
             gameBoard = [2,2,2,2,2,2,2,2,2]
+            lblText.text = nil
         }
     }
-    
 }
 
