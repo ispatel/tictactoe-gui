@@ -78,14 +78,12 @@ class ViewController: UIViewController {
             }
         }
         
-        for i in 0...7{//checks for horizontal win
-            if i == 0 || i == 3 || i == 6{
+        for i in [0,3,6]{//checks for horizontal win
                 if board[i] == board[i+1] && board[i+1] == board[i+2] && board[i] != 2{
                     runWin(board: board, activePlayer: activePlayer)
                     return true
                 }
             }
-        }
         
         if board[0] == board[4] && board[4] == board[8] && board[0] != 2{//checks for diagonal win
             runWin(board: board, activePlayer: activePlayer)
@@ -99,18 +97,17 @@ class ViewController: UIViewController {
     }
     
     func fullBoard(board: [Int], Win: Bool) {
-        func blankspace(board: [Int]) -> Bool{//checks to see if board is full
+        func blankSpace(board: [Int]) -> Bool{//checks to see if board is full
             for i in 0...8{
                 if board[i]==2{
                     //if any element in the array = 2 there is still an empty spot
                     return true
                 }
             }
-            // if function returns false all spots are taken
-            return false
+            return false// if function returns false all spots are taken
         }
         
-        if Win == false && blankspace(board: board) == false{//concludes draw if board is full and no win detected
+        if Win == false && blankSpace(board: board) == false{//concludes draw if board is full and no win detected
             print("It's a draw")
             lblText.text = "It's a draw!"
             gameBoard = [0,0,0,0,0,0,0,0,0]
@@ -118,9 +115,9 @@ class ViewController: UIViewController {
         
     }
     @IBAction func btnTap(_ sender: AnyObject) {
-        if gameBoard[sender.tag-1] == 2{
+        if gameBoard[sender.tag-1] == 2{//checks to make sure space is empty
            
-            if activePlayer == 0 {
+            if activePlayer == 0 { //if the player is cross
                 sender.setImage(UIImage(named: "Cross.png"), for: .normal)
                 activePlayer = 1
                 gameBoard[sender.tag-1] = 0
@@ -142,12 +139,13 @@ class ViewController: UIViewController {
     }
 
 
-    @IBAction func Restart(_ sender: Any) {
-        for i in 1...9{
+    @IBAction func Restart(_ sender: Any) {//executes set of comand when restart button tapped
+        gameBoard = [2,2,2,2,2,2,2,2,2] //sets board back to blank
+        lblText.text = nil //removes the winner from lblText
+        for i in 1...9{//clears the board
             let button = view.viewWithTag(i) as! UIButton
             button.setImage(nil, for: .normal)
-            gameBoard = [2,2,2,2,2,2,2,2,2]
-            lblText.text = nil
+          
         }
     }
 }

@@ -162,9 +162,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fGh-Qo-fa1">
-                                <rect key="frame" x="168" y="770" width="78" height="42"/>
+                                <rect key="frame" x="176" y="770" width="62" height="42"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Restart"/>
+                                <state key="normal" title="Reset"/>
                                 <connections>
                                     <action selector="Restart:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LBe-eb-0pj"/>
                                 </connections>
