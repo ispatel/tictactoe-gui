@@ -44,10 +44,11 @@ class ViewController: UIViewController {
     
     
     var activePlayer = Int.random(in: 0...1)//picks random player to start game
-    var gameBoard = [2,2,2,2,2,2,2,2,2]
+    var gameBoard = [2,2,2,2,2,2,2,2,2,9]
     //cross = 0
     //nought = 1
     //empty space = 2
+    //last index used for cpuMove funciton
     var playerScore:Int = 0 //variable to keep track of player score
     var cpuScore:Int = 0//variable to keep track of cpu score
     
@@ -114,6 +115,84 @@ class ViewController: UIViewController {
         }
         
     }
+    
+    func cpuMove(board: [Int]) -> Int{
+    
+        func twoInRow(board: [Int]) -> Int {
+            for i in 0...2{//checks for any vert two in row and return the spot needed to win
+                if (board[i] == board[i+3] && board[i] != 2) {
+                    print("two in row")
+                    return i+6
+                }
+                    
+                else if (board[i+3] == board[i+6] && board[i+3] != 2){
+                    print("two in row")
+                    return i
+                }
+                
+                else if board[i] == board[i+6] && board[i] != 2 {
+                    print("two in row")
+                    return i + 3
+                }
+            }
+            
+            for i in [0,3,6]{//checks for horiz two in row
+                if (board[i] == board[i+1] && board[i] != 2){
+                    print("two in row")
+                    return i+2
+                }
+                else if (board[i+1] == board[i+2] && board[i+1] != 2){
+                    print("two in row")
+                    return i
+                }
+                else if board[i] == board[i+2] && board[i] != 2{
+                    print("two in row")
+                    return i+1
+                }
+            }
+            
+            //checking diagnol 1
+            if board[4] == board[8] && board[8] != 2{
+                print("two in row")
+                return 0
+            }
+            if board[0] == board[8] && board[0] != 2{
+                print("two in row")
+                return 4
+            }
+            if board[0] == board[4] && board[0] != 2{//checks for diagonal win
+                print("two in row")
+                return 8
+            }
+            
+            // checking diagnol 2
+            if board[4] == board[6] && board[4] != 2{
+                print("two in row")
+                return 2
+            }
+            if board[2] == board[6] && board[2] != 2{
+                print("two in row")
+                return 4
+            }
+            if board[2] == board[4] && board[2] != 2{//checks for diagonal win
+                print("two in row")
+                return 6
+            }
+            
+            //if there is no 2 in row then return 9
+            return 9
+        }
+       
+        if board[twoInRow(board: board)] == 2{
+            print("win able")
+            print(twoInRow(board: board))
+            return twoInRow(board: board)
+            
+        }
+        else{
+            return 9
+        }
+    }
     @IBAction func btnTap(_ sender: AnyObject) {
         if gameBoard[sender.tag-1] == 2{//checks to make sure space is empty
            
@@ -124,6 +203,8 @@ class ViewController: UIViewController {
                 print(gameBoard)
                 //checks if move caused player 1 to win
                 fullBoard(board: gameBoard, Win: checkWin(board: gameBoard, activePlayer: activePlayer))
+                print(cpuMove(board: gameBoard))
+                
             }
                 
             else{
@@ -140,7 +221,7 @@ class ViewController: UIViewController {
 
 
     @IBAction func Restart(_ sender: Any) {//executes set of comand when restart button tapped
-        gameBoard = [2,2,2,2,2,2,2,2,2] //sets board back to blank
+        gameBoard = [2,2,2,2,2,2,2,2,2,9] //sets board back to blank
         lblText.text = nil //removes the winner from lblText
         for i in 1...9{//clears the board
             let button = view.viewWithTag(i) as! UIButton
